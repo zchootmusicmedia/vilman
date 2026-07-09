@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>המכתב שלא הצלחתי לכתוב לך</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main id="app" class="app">
+
+    <section id="introScreen" class="screen intro-screen active">
+      <div class="intro-card">
+        <img src="assets/images/logo.png" class="logo" alt="מיכל וילמן" />
+        <div class="kicker">חוויה אינטראקטיבית לאימהות לילדים רגישים</div>
+        <h1>המכתב שלא הצלחתי לכתוב לך</h1>
+
+        <div class="intro-text">
+          <p>אמא יקרה,</p>
+          <p>בכלי שמוצג כאן לפנייך, יעלו סיטואציות שונות שיציגו מגוון התנהגויות ואינטראקציות.</p>
+          <p>בואי והתמקדי כמה ד' בילד ונסי לגלות, מה הוא בעצם היה רוצה לאמר לך באמת?</p>
+          <p>אלו דקות יקרות שבהן את מייצרת יותר הבנה ויותר חמלה עבורו</p>
+          <p>וככל שהוא ירגיש את זה יותר, הוא בעז"ה ייתחבר אליך וירגיש נינוח ורגוע יותר.</p>
+          <p>עכשיו נתחיל יחד לכתוב את המכתב שהילד שלך רוצה לכתוב לך.</p>
+          <p class="ready">מוכנה?</p>
+        </div>
+
+        <div class="signup-box" aria-label="טופס הרשמה">
+          <script type='text/javascript' src='//form2.ravpage.co.il/1e31cfb2d82d5cafdcc676033cc071486A500C06' charset='UTF-8'></script>
+          <button id="startBtn" class="primary-btn fallback-start" type="button">נתחיל לכתוב</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="gameScreen" class="screen game-screen">
+      <header class="topbar">
+        <img src="assets/images/logo.png" class="logo small" alt="מיכל וילמן" />
+        <div class="progress">
+          <span id="stepCounter">1 / 8</span>
+          <div class="progress-track"><div id="progressFill" class="progress-fill"></div></div>
+        </div>
+      </header>
+
+      <div class="game-board">
+        <aside class="letter-panel">
+          <div class="paper draft-paper" id="draftPaper">
+            <div class="dear">אמא יקרה,</div>
+            <div id="draftLines" class="draft-lines"></div>
+            <img id="writingHand" src="assets/images/hand.png" alt="" class="writing-hand" />
+          </div>
+        </aside>
+
+        <section class="choices-panel">
+          <div class="prompt">אילו היו לי המילים... אולי הייתי כותב לך:</div>
+          <div id="choices" class="choices"></div>
+          <div class="actions">
+            <button id="undoBtn" class="ghost-btn" type="button" hidden>מחיקה ובחירה מחדש</button>
+            <button id="nextBtn" class="primary-btn" type="button" hidden>להמשך המכתב</button>
+          </div>
+        </section>
+
+        <section class="scene-panel">
+          <div class="scene-image-wrap">
+            <img id="sceneImage" class="scene-image" alt="" />
+          </div>
+          <div class="scene-text">
+            <p id="sceneDesc"></p>
+            <blockquote id="sceneQuote"></blockquote>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section id="finalScreen" class="screen final-screen">
+      <div class="final-wrap">
+        <img src="assets/images/logo.png" class="logo small final-logo" alt="מיכל וילמן" />
+        <div id="envelope" class="envelope" aria-hidden="true">
+          <div class="env-flap"></div>
+          <div class="env-body"></div>
+          <div class="env-letter"></div>
+        </div>
+
+        <article id="finalLetter" class="paper final-letter">
+          <h2>המכתב שלא הצלחתי לכתוב לך</h2>
+          <p><strong>אמא היקרה שלי,</strong></p>
+          <p>יש הרבה דברים שניסיתי להגיד לך...</p>
+          <p>אבל לא תמיד היו לי המילים הנכונות.</p>
+          <p>לפעמים מה שיצא ממני היו דווקא צעקות, שתיקות, כעס, או מילים שפגעו.</p>
+          <p>אם רק הייתי מצליח להסביר לך מה באמת היה לי בלב...</p>
+          <p><strong>המכתב שלי היה נראה כך:</strong></p>
+
+          <div id="finalParagraphs" class="final-paragraphs"></div>
+
+          <p class="letter-ending"><strong>אמא...</strong><br>
+          תודה שניסית לקרוא<br>
+          גם את מה שלא הצלחתי להגיד.</p>
+
+          <div class="mother-line">
+            <label for="motherInput">אם הילד שלך היה מוסיף עוד שורה למכתב הזה — מה היית חושבת שהוא היה רוצה לכתוב לך?</label>
+            <textarea id="motherInput" rows="3" placeholder="כתבי כאן את השורה שלך..."></textarea>
+          </div>
+
+          <p class="signature">הלוואי שהמכתב הזה יעזור לך לשמוע גם את המילים שלא תמיד נאמרות.<br><strong>באהבה, מיכל</strong></p>
+        </article>
+
+        <div class="cta">
+          <p><strong>זה היה רק המכתב הראשון.</strong></p>
+          <p>יש עוד הרבה "מכתבים"<br>שמסתתרים מאחורי ההתנהגויות של הילד שלך.</p>
+          <p>אם תרצי,<br>אשמח לעזור לך ללמוד לקרוא גם אותם.</p>
+          <a id="ctaBtn" class="primary-btn cta-btn" href="https://michal-vilman.ravpage.co.il/ragish3" target="_blank" rel="noopener">אני רוצה להבין את הילד שלי לעומק</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
