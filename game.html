@@ -9,7 +9,7 @@
 <body>
   <main id="app" class="app">
 
-    <section id="introScreen" class="screen intro-screen active">
+    <section id="introScreen" class="screen intro-screen">
       <div class="intro-card">
         <img src="assets/images/logo.png" class="logo" alt="מיכל וילמן" />
         <div class="kicker">חוויה אינטראקטיבית לאימהות לילדים רגישים</div>
@@ -31,7 +31,7 @@
       </div>
     </section>
 
-    <section id="gameScreen" class="screen game-screen">
+    <section id="gameScreen" class="screen game-screen active">
       <header class="topbar">
         <img src="assets/images/logo.png" class="logo small" alt="מיכל וילמן" />
         <div class="progress">
@@ -111,6 +111,7 @@
     </section>
   </main>
 
+  <script>window.START_GAME_DIRECTLY=true;</script>
   <script src="script.js"></script>
 </body>
 </html>

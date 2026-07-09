@@ -2,8 +2,8 @@
 const situations = [
   {
     "image": "assets/images/scene1_table.png",
-    "desc": "אמא מבקשת מהילד לעזור בפינוי השולחן.",
-    "quote": "למה תמיד רק אני? למה את לא מבקשת ממנו אף פעם?",
+    "desc": "ההורה מבקש מהילד לעזור (בפינוי מהשולחן), והילד מגיב בטון מזלזל וכועס:",
+    "quote": "למה תמיד רק אני? למה אתה לא מבקש ממנו אף פעם?",
     "choices": [
       {
         "short": "רציתי שתראי כמה אני כבר עושה ומשתדל.",
@@ -191,7 +191,7 @@ const situations = [
   },
   {
     "image": "assets/images/scene8_task.png",
-    "desc": "הילד מסיים לבצע משימה שקיבל. אמא מבקשת שישפר משהו קטן. הילד מתפרץ:",
+    "desc": "הילד מסיים לבצע משימה שקיבל. ההורה מבקש שישפר משהו קטן. הילד מתפרץ:",
     "quote": "את תמיד חייבת למצוא מה לא בסדר! תעשי את זה בעצמך וזהו!",
     "choices": [
       {
@@ -242,11 +242,19 @@ let selected = [];
 let currentChoiceIndex = null;
 let isTyping = false;
 
-startBtn.addEventListener('click', () => {
-  introScreen.classList.remove('active');
-  gameScreen.classList.add('active');
+function startGame() {
+  if (introScreen) introScreen.classList.remove('active');
+  if (gameScreen) gameScreen.classList.add('active');
   loadSituation(0);
-});
+}
+
+if (startBtn) {
+  startBtn.addEventListener('click', startGame);
+}
+
+if (window.START_GAME_DIRECTLY) {
+  startGame();
+}
 
 nextBtn.addEventListener('click', () => {
   if (isTyping) return;
@@ -272,7 +280,13 @@ undoBtn.addEventListener('click', () => {
 
 function loadSituation(index) {
   const item = situations[index];
-  sceneImage.src = item.image;
+  sceneImage.classList.add('changing');
+  sceneImage.alt = `סיטואציה ${index + 1}`;
+  sceneImage.src = '';
+  window.requestAnimationFrame(() => {
+    sceneImage.src = `${item.image}?step=${index + 1}`;
+    sceneImage.onload = () => sceneImage.classList.remove('changing');
+  });
   sceneDesc.textContent = item.desc;
   sceneQuote.textContent = item.quote || '';
   sceneQuote.style.display = item.quote ? 'block' : 'none';

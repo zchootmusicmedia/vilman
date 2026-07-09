@@ -31,3 +31,7 @@
 https://michal-vilman.ravpage.co.il/ragish3
 
 אפשר לערוך ב-`index.html`.
+
+עדכון שימוש:
+- index.html = עמוד פתיחה עם טופס הרשמה.
+- game.html = עמוד המשחק עצמו. הגדירי אותו כדף תודה/Redirect אחרי שליחת הטופס.
