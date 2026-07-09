@@ -375,23 +375,36 @@ function typeText(el, text, done) {
 function placeHand(el, progress) {
   const paperRect = draftPaper.getBoundingClientRect();
   const rect = el.getBoundingClientRect();
+  const style = window.getComputedStyle(el);
+  const fontSize = parseFloat(style.fontSize) || 30;
+  const lineHeight = parseFloat(style.lineHeight) || (fontSize * 1.65);
 
-  // The hand image is positioned by its box, but visually the "writing point"
-  // is the pen tip near the lower-left of the PNG. These offsets anchor the
-  // pen tip to the current writing line instead of letting the whole image sit
-  // below the text.
-  const lineWidth = Math.min(rect.width, paperRect.width - 70);
-  const startRight = 38;
-  const travel = Math.max(90, lineWidth * 0.75);
+  // Measure the text that has already appeared. In Hebrew/RTL the writing
+  // starts from the right and moves left, so the pen tip should follow the
+  // left edge of the currently typed text, not the box of the whole paragraph.
+  if (!placeHand.ctx) {
+    const canvas = document.createElement('canvas');
+    placeHand.ctx = canvas.getContext('2d');
+  }
+  const ctx = placeHand.ctx;
+  ctx.font = `${style.fontWeight || 400} ${style.fontSize} ${style.fontFamily}`;
 
-  // Negative right offset moves the PNG rightward so the pen tip, not the image
-  // edge, follows the typed letters. Negative top offset lifts the pen tip onto
-  // the baseline of the handwritten text.
-  const penTipRightOffset = -96;
-  const penTipTopOffset = -66;
+  const typedWidth = ctx.measureText(el.textContent || '').width;
+  const availableWidth = Math.max(120, rect.width - 14);
+  const lineIndex = Math.max(0, Math.floor(typedWidth / availableWidth));
+  const widthOnLine = typedWidth % availableWidth;
 
-  writingHand.style.top = `${(rect.top - paperRect.top) + penTipTopOffset + draftPaper.scrollTop}px`;
-  writingHand.style.right = `${startRight + (travel * progress) + penTipRightOffset}px`;
+  // Pen tip location inside the PNG at the current displayed size.
+  // These constants were tuned so the pen nib touches the active letters.
+  const penTipX = 22;
+  const penTipY = 74;
+
+  const x = (rect.right - paperRect.left) - widthOnLine - 6;
+  const y = (rect.top - paperRect.top) + draftPaper.scrollTop + (lineIndex * lineHeight) + (fontSize * 1.08);
+
+  writingHand.style.right = 'auto';
+  writingHand.style.left = `${x - penTipX}px`;
+  writingHand.style.top = `${y - penTipY}px`;
 }
 
 function playPenSound() {

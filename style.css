@@ -215,7 +215,7 @@ h1{
   pointer-events:none;
   opacity:0;
   z-index:5;
-  transform:translate(0,0) rotate(-8deg);
+  transform:translate(0,0);
   filter:drop-shadow(0 8px 10px rgba(0,0,0,.12));
 }
 .writing-hand.writing{
@@ -224,7 +224,7 @@ h1{
 }
 .writing-hand.fly{
   opacity:0;
-  transform:translate(-170px,-35px) rotate(-18deg);
+  transform:translate(-170px,-35px);
   transition:opacity .45s ease, transform .55s ease;
 }
 
@@ -567,7 +567,7 @@ h1{
 }
 .writing-hand.fly{
   opacity:0;
-  transform:translate(-170px,-42px) rotate(-18deg);
+  transform:translate(-170px,-42px);
 }
 @media (max-width: 980px){
   body{overflow:auto}
@@ -651,4 +651,13 @@ h1{
 .cta strong{ color:var(--pink); }
 @media (max-width:980px){
   .final-screen{overflow-y:auto}
+}
+
+/* --- hand anchor correction: no text rotation, pen-tip based positioning --- */
+
+.draft-line,
+.draft-lines,
+.dear{
+  transform:none!important;
+  font-style:normal;
 }
