@@ -375,11 +375,23 @@ function typeText(el, text, done) {
 function placeHand(el, progress) {
   const paperRect = draftPaper.getBoundingClientRect();
   const rect = el.getBoundingClientRect();
+
+  // The hand image is positioned by its box, but visually the "writing point"
+  // is the pen tip near the lower-left of the PNG. These offsets anchor the
+  // pen tip to the current writing line instead of letting the whole image sit
+  // below the text.
   const lineWidth = Math.min(rect.width, paperRect.width - 70);
   const startRight = 38;
   const travel = Math.max(90, lineWidth * 0.75);
-  writingHand.style.top = `${(rect.top - paperRect.top) + 4 + draftPaper.scrollTop}px`;
-  writingHand.style.right = `${startRight + (travel * progress)}px`;
+
+  // Negative right offset moves the PNG rightward so the pen tip, not the image
+  // edge, follows the typed letters. Negative top offset lifts the pen tip onto
+  // the baseline of the handwritten text.
+  const penTipRightOffset = -96;
+  const penTipTopOffset = -66;
+
+  writingHand.style.top = `${(rect.top - paperRect.top) + penTipTopOffset + draftPaper.scrollTop}px`;
+  writingHand.style.right = `${startRight + (travel * progress) + penTipRightOffset}px`;
 }
 
 function playPenSound() {
