@@ -36,8 +36,13 @@
     <p id="genderHint" class="gender-hint">בחרי אפשרות, והיא תישמר גם לאחר ההרשמה.</p>
   </section>
 
-  <div class="signup-box">
-    <script type='text/javascript' src='//form2.ravpage.co.il/1e31cfb2d82d5cafdcc676033cc071486A500C06' charset='UTF-8'></script>
+  <div class="signup-box" id="signupBox">
+    <script type='text/javascript' src='https://form2.ravpage.co.il/1e31cfb2d82d5cafdcc676033cc071486A500C06' charset='UTF-8'></script>
+    <div class="form-loading-note" id="formLoadingNote">
+      הטופס לא הופיע? ייתכן שהדפדפן חסם אותו זמנית.
+      <br>
+      <button type="button" class="secondary-btn" onclick="location.reload()">טעני את הטופס מחדש</button>
+    </div>
   </div>
 </main>
 
@@ -83,6 +88,41 @@ if(savedGender) document.querySelector(`[data-gender="${savedGender}"]`)?.classL
 const modal=document.getElementById('purposeModal');
 document.querySelector('[data-open-purpose]').onclick=()=>{modal.classList.add('open');modal.setAttribute('aria-hidden','false')};
 modal.querySelectorAll('.modal-close,.modal-done').forEach(b=>b.onclick=()=>{modal.classList.remove('open');modal.setAttribute('aria-hidden','true')});
+
+const signupBox = document.getElementById('signupBox');
+const formNote = document.getElementById('formLoadingNote');
+
+function normalizeEmbeddedForm() {
+  const frames = signupBox ? signupBox.querySelectorAll('iframe') : [];
+  frames.forEach(frame => {
+    frame.style.setProperty('width', '100%', 'important');
+    frame.style.setProperty('min-height', '760px', 'important');
+    frame.style.setProperty('height', '760px', 'important');
+    frame.style.setProperty('display', 'block', 'important');
+    frame.setAttribute('scrolling', 'no');
+  });
+
+  const hasVisibleContent =
+    frames.length > 0 ||
+    (signupBox && signupBox.querySelector('form')) ||
+    (signupBox && signupBox.children.length > 2);
+
+  if (hasVisibleContent && formNote) {
+    formNote.classList.remove('show');
+  }
+}
+
+if (signupBox) {
+  const observer = new MutationObserver(normalizeEmbeddedForm);
+  observer.observe(signupBox, { childList: true, subtree: true, attributes: true });
+  setTimeout(normalizeEmbeddedForm, 500);
+  setTimeout(normalizeEmbeddedForm, 1800);
+  setTimeout(() => {
+    normalizeEmbeddedForm();
+    const hasForm = signupBox.querySelector('iframe, form, input, .form');
+    if (!hasForm && formNote) formNote.classList.add('show');
+  }, 5000);
+}
 </script>
 </body>
 </html>
