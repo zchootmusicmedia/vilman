@@ -98,7 +98,7 @@ function render(){
  const item=getItems()[current];
  sceneImage.src=item.image;
  sceneDesc.textContent=item.desc;
- sceneQuote.textContent=item.quote||'';
+ sceneQuote.textContent=(item.quote||'').replace(/[„“”"׳״]/g,'').trim(); sceneQuote.style.display=sceneQuote.textContent?'block':'none';
  promptEl.textContent=item.prompt;
  stepCounter.textContent=`${current+1} / ${BASE.length}`;
  progressFill.style.width=`${((current+1)/BASE.length)*100}%`;
@@ -158,50 +158,44 @@ function showFinal(){
   $('#motherLabel').innerHTML='אם הילד שלך היה מוסיף עוד שורה למכתב הזה, מה היית חושבת שהוא היה רוצה לכתוב לך?';
  }
  window.scrollTo({top:0,behavior:'smooth'});
+ animateFinalLetter();
 }
 $('#motherInput').addEventListener('input',()=>{});
 $('#pdfBtn').addEventListener('click',downloadPDF);
 
 async function downloadPDF(){
- const btn=$('#pdfBtn');const old=btn.textContent;btn.disabled=true;btn.textContent='מכינה את המכתב...';
+ const btn=$('#pdfBtn'),old=btn.textContent;btn.disabled=true;btn.textContent='מכינה את המכתב...';
  try{
-  if(!window.html2canvas||!window.jspdf) throw new Error('ספריית PDF לא נטענה');
-  const pdf=$('#pdfContent');
-  const addLine=$('#motherInput').value.trim();
-  const paras=selected.filter(Boolean).map(c=>`<p>${escapeHTML(c.long)}</p>`).join('');
   const intro=gender==='girl'?'אם רק הייתי מצליחה להסביר לך מה באמת היה לי בלב...':'אם רק הייתי מצליח להסביר לך מה באמת היה לי בלב...';
-  const ending=gender==='girl'?'אוהבת':'אוהב';
-  pdf.innerHTML=`
-    <h1>המכתב שלא הצלחתי לכתוב לך</h1>
-    <p><strong>אמא היקרה שלי,</strong></p>
-    <p>יש הרבה דברים שניסיתי להגיד לך...</p>
-    <p>אבל לא תמיד היו לי המילים הנכונות.</p>
-    <p>לפעמים מה שיצא ממני היו דווקא צעקות, שתיקות, כעס, או מילים שפגעו.</p>
-    <p>${intro}</p>${paras}
-    ${addLine?`<p>${escapeHTML(addLine)}</p>`:''}
-    <p><strong>אמא...</strong><br>תודה שניסית לקרוא<br>גם את מה שלא הצלחתי להגיד.</p>
-    <p><strong>${ending},<br>אני</strong></p>`;
-  const canvas=await html2canvas(pdf,{scale:1.5,useCORS:true,backgroundColor:'#fff'});
-  const {jsPDF}=window.jspdf;
-  const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
-  const pageW=210,pageH=297;
-  const pxPerPage=canvas.width*(pageH/pageW);
-  let y=0,page=0;
-  while(y<canvas.height){
-    const slice=document.createElement('canvas');
-    slice.width=canvas.width;slice.height=Math.min(pxPerPage,canvas.height-y);
-    slice.getContext('2d').drawImage(canvas,0,y,canvas.width,slice.height,0,0,canvas.width,slice.height);
-    if(page>0)doc.addPage();
-    const img=slice.toDataURL('image/jpeg',0.95);
-    const h=pageW*(slice.height/slice.width);
-    doc.addImage(img,'JPEG',0,0,pageW,h);
-    y+=pxPerPage;page++;
-  }
+  let blocks=['<strong>אמא היקרה שלי,</strong>','יש הרבה דברים שניסיתי להגיד לך...','אבל לא תמיד היו לי המילים הנכונות.','לפעמים מה שיצא ממני היו דווקא צעקות, שתיקות, כעס, או מילים שפגעו.',intro,...selected.filter(Boolean).map(c=>c.long)];
+  const extra=$('#motherInput').value.trim();if(extra)blocks.push('<strong>ויש עוד משהו שאולי רציתי לומר לך...</strong><br>'+escapeHTML(extra));
+  blocks.push('<strong>אמא...</strong><br>תודה שניסית לקרוא<br>גם את מה שלא הצלחתי להגיד.',`<strong>${gender==='girl'?'אוהבת':'אוהב'},<br>אני</strong>`);
+  let pages=[],page=[],units=0;
+  for(const x of blocks){const u=Math.max(2,Math.ceil(x.replace(/<[^>]+>/g,'').length/52)+1);if(units+u>22&&page.length){pages.push(page);page=[];units=0}page.push(x);units+=u}if(page.length)pages.push(page);
+  const {jsPDF}=window.jspdf,doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+  for(let i=0;i<pages.length;i++){if(i)doc.addPage();const el=document.createElement('div');el.className='pdf-content';el.style.position='fixed';el.style.left='-20000px';el.style.top='0';el.innerHTML=(i===0?'<h1>המכתב שלא הצלחתי לכתוב לך</h1>':'')+pages[i].map(x=>`<p>${x}</p>`).join('');document.body.appendChild(el);const c=await html2canvas(el,{scale:1.3,useCORS:true,backgroundColor:'#fff'});doc.addImage(c.toDataURL('image/jpeg',.94),'JPEG',0,0,210,297);el.remove()}
   doc.save('המכתב-שלא-הצלחתי-לכתוב-לך.pdf');
- }catch(e){
-  alert('לא הצלחתי ליצור את ה־PDF כרגע. אפשר לנסות שוב או להשתמש באפשרות ההדפסה של הדפדפן.');
-  console.error(e);
- }finally{btn.disabled=false;btn.textContent=old}
+ }catch(e){console.error(e);alert('לא הצלחתי ליצור את ה־PDF כרגע. נסי שוב.')}finally{btn.disabled=false;btn.textContent=old}
 }
 function escapeHTML(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 init();
+
+let finalTypingCancelled=false;
+async function animateFinalLetter(){
+ finalTypingCancelled=false;
+ const ps=[...document.querySelectorAll('#finalParagraphs p')];
+ ps.forEach(p=>{p.dataset.full=p.textContent;p.textContent=''});
+ const skip=document.querySelector('#skipFinalTyping'); if(skip)skip.hidden=false;
+ for(const p of ps){
+  const t=p.dataset.full||'';
+  for(let i=0;i<t.length&&!finalTypingCancelled;i++){p.textContent+=t[i];if(i%4===0)await new Promise(r=>setTimeout(r,22))}
+  if(finalTypingCancelled)break;
+ }
+ if(finalTypingCancelled)ps.forEach(p=>p.textContent=p.dataset.full||'');
+ if(skip)skip.hidden=true;
+}
+document.querySelector('#skipFinalTyping')?.addEventListener('click',()=>{finalTypingCancelled=true;document.querySelectorAll('#finalParagraphs p').forEach(p=>p.textContent=p.dataset.full||'')});
+document.querySelector('#motherInput')?.addEventListener('input',e=>{
+ const v=e.target.value.trim(),box=document.querySelector('#customLetterLine');
+ box.innerHTML=v?`<p><strong>ויש עוד משהו שאולי רציתי לומר לך...</strong><br>${escapeHTML(v)}</p>`:'';
+});

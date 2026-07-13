@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap");
 
 @font-face{
  font-family:'OHNoam';
@@ -13,7 +14,7 @@
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;direction:rtl}
 body{
- color:var(--ink);font-family:Arial,"Assistant",sans-serif;
+ color:var(--ink);font-family:"Heebo",Arial,sans-serif;
  background:
  radial-gradient(circle at 5% 8%,rgba(207,45,107,.15),transparent 28%),
  radial-gradient(circle at 94% 10%,rgba(196,147,23,.17),transparent 27%),
@@ -99,10 +100,10 @@ h2{color:var(--brand-dark)}
 .final-wrap{width:min(1050px,95vw);margin:10px auto 70px;text-align:center}
 .final-letter{width:min(780px,100%);margin:auto;padding:48px 58px;text-align:right;font-size:25px;line-height:1.62;max-height:none;overflow:visible}
 .final-letter-logo{display:block;width:150px;margin:0 auto 15px}
-.final-letter h2{text-align:center;font-family:Arial,sans-serif;color:var(--pink)}
+.final-letter h2{text-align:center;font-family:"Heebo",Arial,sans-serif;color:var(--pink)}
 .final-paragraphs p{margin:1.2em 0}
 .letter-ending{margin-top:35px}
-.mother-line{font-family:Arial,sans-serif;border-top:2px solid var(--pink-soft);padding-top:24px;margin-top:30px}
+.mother-line{font-family:"Heebo",Arial,sans-serif;border-top:2px solid var(--pink-soft);padding-top:24px;margin-top:30px}
 .mother-line label{display:block;font-size:19px;font-weight:800;margin-bottom:10px}
 .mother-line textarea{width:100%;padding:14px;border-radius:16px;border:1px solid #dcc3bc;font-size:18px}
 .signature{text-align:center;color:var(--pink);font-size:20px}
@@ -125,7 +126,7 @@ h2{color:var(--brand-dark)}
  background:#fff url('assets/images/pdf-stationery.jpg') center top/100% 100% no-repeat;
  color:#4b2723;font-family:'OHNoam',cursive;font-size:34px;line-height:1.55;text-align:right
 }
-.pdf-content h1{font-family:Arial,sans-serif;text-align:center;font-size:48px;color:var(--brand-dark)}
+.pdf-content h1{font-family:"Heebo",Arial,sans-serif;text-align:center;font-size:48px;color:var(--brand-dark)}
 .pdf-content p{margin:22px 0}
 @media(max-width:950px){
  .game-screen{height:auto;min-height:100vh;overflow-y:auto}
@@ -142,4 +143,25 @@ h2{color:var(--brand-dark)}
  .progress-track{width:120px}
  .topbar .logo{width:82px}
  .gender-buttons button{width:100%}
+}
+
+.modal{z-index:2147483647!important;isolation:isolate}
+.modal::before{content:"";position:absolute;inset:0;background:rgba(58,25,27,.72);z-index:-1}
+.registration-page .signup-box iframe,.registration-page .signup-box form{position:relative!important;z-index:1!important}
+.topbar{background:transparent!important;box-shadow:none!important;border-radius:0!important}
+html,body,.app,.screen{max-width:100%;overflow-x:hidden!important}
+.game-board{width:100%;max-width:100%;min-width:0}
+.letter-panel,.choices-panel,.scene-panel,.choices,.choice-btn{min-width:0;max-width:100%}
+.choices{overflow:visible!important;gap:8px!important}
+.choice-btn{padding:10px 13px!important;font-size:clamp(14px,1.1vw,17px)!important;line-height:1.25!important}
+.choices-panel{overflow:visible!important;padding-top:6px!important}
+.prompt{margin:3px 0 8px!important;font-size:clamp(20px,1.7vw,29px)!important}
+.actions{margin-top:7px!important}
+.scene-text blockquote:empty{display:none!important}
+.pdf-content{height:1754px!important;min-height:1754px!important;overflow:hidden!important}
+@media(max-width:950px){
+ .game-board{width:100%!important;padding:0!important;gap:12px!important}
+ .scene-panel,.choices-panel,.letter-panel{width:100%!important;max-width:100%!important;padding-left:0!important;padding-right:0!important}
+ .choice-btn{width:100%!important;font-size:16px!important;padding:11px!important}
+ .game-screen{padding:9px!important}
 }
