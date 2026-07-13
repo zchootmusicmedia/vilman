@@ -165,3 +165,22 @@ html,body,.app,.screen{max-width:100%;overflow-x:hidden!important}
  .choice-btn{width:100%!important;font-size:16px!important;padding:11px!important}
  .game-screen{padding:9px!important}
 }
+
+/* Round 2 mobile corrections */
+@media (max-width:950px){
+ html,body{width:100%!important;max-width:100%!important;margin:0!important;overflow-x:hidden!important}
+ .app,.screen,.game-screen,.game-board,.scene-panel,.choices-panel,.letter-panel{
+   box-sizing:border-box!important;width:100%!important;max-width:100%!important;min-width:0!important;
+ }
+ .game-screen{padding-left:14px!important;padding-right:14px!important}
+ .scene-panel,.choices-panel,.letter-panel{margin-left:0!important;margin-right:0!important}
+ .scene-panel img,.scene-image{display:block!important;width:100%!important;max-width:100%!important;height:auto!important}
+ .prompt,.scene-text,.choices,.choice-btn{
+   box-sizing:border-box!important;width:100%!important;max-width:100%!important;
+   margin-left:0!important;margin-right:0!important;overflow-wrap:anywhere!important;
+ }
+ .choice-btn{
+   font-size:17px!important;line-height:1.34!important;
+   padding:12px 14px!important;
+ }
+}

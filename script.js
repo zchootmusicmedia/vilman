@@ -199,3 +199,10 @@ document.querySelector('#motherInput')?.addEventListener('input',e=>{
  const v=e.target.value.trim(),box=document.querySelector('#customLetterLine');
  box.innerHTML=v?`<p><strong>ויש עוד משהו שאולי רציתי לומר לך...</strong><br>${escapeHTML(v)}</p>`:'';
 });
+
+document.querySelector('#tutorialDone')?.addEventListener('click',()=>{
+ const m=document.querySelector('#tutorialModal'); if(m){m.classList.remove('open','show');m.hidden=true;}
+});
+document.querySelector('#tutorialModal .modal-close')?.addEventListener('click',()=>{
+ const m=document.querySelector('#tutorialModal'); if(m){m.classList.remove('open','show');m.hidden=true;}
+});
