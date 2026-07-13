@@ -71,14 +71,13 @@ function closeModal(m){m.classList.remove('open');m.setAttribute('aria-hidden','
 document.querySelectorAll('.modal-close,.modal-done').forEach(b=>b.addEventListener('click',()=>closeModal(b.closest('.modal'))));
 document.querySelectorAll('[data-open-purpose]').forEach(b=>b.addEventListener('click',()=>openModal('purposeModal')));
 $('#tutorialAgain').addEventListener('click',()=>openModal('tutorialModal'));
-$('#tutorialDone').addEventListener('click',()=>{closeModal($('#tutorialModal'));startGame()});
+$('#tutorialDone').addEventListener('click',()=>closeModal($('#tutorialModal')));
 
 document.querySelectorAll('[data-game-gender]').forEach(btn=>{
  btn.addEventListener('click',()=>{
   gender=btn.dataset.gameGender;
   localStorage.setItem('vilmanGender',gender);
-  genderScreen.classList.remove('active');
-  openModal('tutorialModal');
+  startGame(true);
  });
 });
 
@@ -86,13 +85,25 @@ function init(){
  if(!gender){
   genderScreen.classList.add('active');
  }else{
-  openModal('tutorialModal');
+  startGame(true);
  }
 }
-function startGame(){
- current=0;selected=[];draftLines.innerHTML='';
- genderScreen.classList.remove('active');finalScreen.classList.remove('active');gameScreen.classList.add('active');
+function startGame(showTutorial=false){
+ current=0;
+ selected=[];
+ draftLines.innerHTML='';
+ genderScreen.classList.remove('active');
+ finalScreen.classList.remove('active');
+ gameScreen.classList.add('active');
  render();
+
+ if(showTutorial){
+  setTimeout(()=>{
+   if(gameScreen.classList.contains('active')){
+    openModal('tutorialModal');
+   }
+  },2000);
+ }
 }
 function render(){
  const item=getItems()[current];
@@ -200,9 +211,5 @@ document.querySelector('#motherInput')?.addEventListener('input',e=>{
  box.innerHTML=v?`<p><strong>ויש עוד משהו שאולי רציתי לומר לך...</strong><br>${escapeHTML(v)}</p>`:'';
 });
 
-document.querySelector('#tutorialDone')?.addEventListener('click',()=>{
- const m=document.querySelector('#tutorialModal'); if(m){m.classList.remove('open','show');m.hidden=true;}
-});
-document.querySelector('#tutorialModal .modal-close')?.addEventListener('click',()=>{
- const m=document.querySelector('#tutorialModal'); if(m){m.classList.remove('open','show');m.hidden=true;}
-});
+
+
