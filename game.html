@@ -1,117 +1,157 @@
 <!doctype html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>המכתב שלא הצלחתי לכתוב לך</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>המכתב שלא הצלחתי לכתוב לך</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main id="app" class="app">
-
-    <section id="introScreen" class="screen intro-screen">
-      <div class="intro-card">
-        <img src="assets/images/logo.png" class="logo" alt="מיכל וילמן" />
-        <div class="kicker">חוויה אינטראקטיבית לאימהות לילדים רגישים</div>
-        <h1>המכתב שלא הצלחתי לכתוב לך</h1>
-
-        <div class="intro-text">
-          <p>אמא יקרה,</p>
-          <p>בכלי שמוצג כאן לפנייך, יעלו סיטואציות שונות שיציגו מגוון התנהגויות ואינטראקציות.</p>
-          <p>בואי והתמקדי כמה דקות בילד ונסי לגלות, מה הוא בעצם היה רוצה לאמר לך באמת?</p>
-          <p>אלו דקות יקרות שבהן את מייצרת יותר הבנה ויותר חמלה עבורו</p>
-          <p>וככל שהוא ירגיש את זה יותר, הוא בעז"ה ייתחבר אליך וירגיש נינוח ורגוע יותר.</p>
-          <p class="start-line">עכשיו נתחיל יחד לכתוב את המכתב שהילד שלך רוצה לכתוב לך.</p>
-          <p class="ready">מוכנה?</p>
-        </div>
-
-        <div class="signup-box" aria-label="טופס הרשמה">
-          <script type='text/javascript' src='//form2.ravpage.co.il/1e31cfb2d82d5cafdcc676033cc071486A500C06' charset='UTF-8'></script>
-        </div>
+<main id="app" class="app">
+  <section id="genderScreen" class="screen gender-screen">
+    <div class="gender-card">
+      <img src="assets/images/logo.png" class="logo" alt="חלום של אמא">
+      <h1>המכתב שלא הצלחתי לכתוב לך</h1>
+      <h2>ממי המכתב שאת הולכת לקבל?</h2>
+      <div class="gender-buttons">
+        <button type="button" data-game-gender="boy">👦 מהילד שלי</button>
+        <button type="button" data-game-gender="girl">👧 מהילדה שלי</button>
       </div>
-    </section>
+      <button class="secondary-btn" data-open-purpose type="button">מה המטרה של הכלי?</button>
+    </div>
+  </section>
 
-    <section id="gameScreen" class="screen game-screen active">
-      <header class="topbar">
-        <img src="assets/images/logo.png" class="logo small" alt="מיכל וילמן" />
-        <div class="progress">
-          <span id="stepCounter">1 / 8</span>
-          <div class="progress-track"><div id="progressFill" class="progress-fill"></div></div>
-        </div>
-      </header>
-
-      <div class="game-board">
-        <aside class="letter-panel">
-          <div class="paper draft-paper" id="draftPaper">
-            <div class="dear">אמא יקרה,</div>
-            <div id="draftLines" class="draft-lines"></div>
-            <img id="writingHand" src="assets/images/hand.png" alt="" class="writing-hand" />
-          </div>
-        </aside>
-
-        <section class="choices-panel">
-          <div class="prompt">אילו היו לי המילים... אולי הייתי כותב לך:</div>
-          <div id="choices" class="choices"></div>
-          <div class="actions">
-            <button id="undoBtn" class="ghost-btn" type="button" hidden>מחיקה ובחירה מחדש</button>
-            <button id="nextBtn" class="primary-btn" type="button" hidden>להמשך המכתב</button>
-          </div>
-        </section>
-
-        <section class="scene-panel">
-          <div class="scene-image-wrap">
-            <img id="sceneImage" class="scene-image" alt="" />
-          </div>
-          <div class="scene-text">
-            <p id="sceneDesc"></p>
-            <blockquote id="sceneQuote"></blockquote>
-          </div>
-        </section>
+  <section id="gameScreen" class="screen game-screen">
+    <header class="topbar">
+      <img src="assets/images/logo.png" class="logo small" alt="חלום של אמא">
+      <div class="progress">
+        <span id="stepCounter">1 / 8</span>
+        <div class="progress-track"><div id="progressFill" class="progress-fill"></div></div>
       </div>
-    </section>
+      <button class="tiny-help" id="tutorialAgain" type="button" aria-label="הסבר">?</button>
+    </header>
 
-    <section id="finalScreen" class="screen final-screen">
-      <div class="final-wrap">
-        <img src="assets/images/logo.png" class="logo small final-logo" alt="מיכל וילמן" />
-        <div id="envelope" class="envelope" aria-hidden="true">
-          <div class="env-flap"></div>
-          <div class="env-body"></div>
-          <div class="env-letter"></div>
+    <div class="game-board">
+      <aside class="letter-panel">
+        <div class="paper draft-paper" id="draftPaper">
+          <div class="dear">אמא יקרה,</div>
+          <div id="draftLines" class="draft-lines"></div>
         </div>
+      </aside>
 
-        <article id="finalLetter" class="paper final-letter">
-          <h2>המכתב שלא הצלחתי לכתוב לך</h2>
-          <p><strong>אמא היקרה שלי,</strong></p>
-          <p>יש הרבה דברים שניסיתי להגיד לך...</p>
-          <p>אבל לא תמיד היו לי המילים הנכונות.</p>
-          <p>לפעמים מה שיצא ממני היו דווקא צעקות, שתיקות, כעס, או מילים שפגעו.</p>
-          <p>אם רק הייתי מצליח להסביר לך מה באמת היה לי בלב...</p>
-          <div id="finalParagraphs" class="final-paragraphs"></div>
-
-          <p class="letter-ending"><strong>אמא...</strong><br>
-          תודה שניסית לקרוא<br>
-          גם את מה שלא הצלחתי להגיד.<br><br>
-          <strong>אוהב,<br>אני</strong></p>
-
-          <div class="mother-line">
-            <label for="motherInput">אם הילד שלך היה מוסיף עוד שורה למכתב הזה<br>מה היית חושבת שהוא היה רוצה לכתוב לך?</label>
-            <textarea id="motherInput" rows="3" placeholder="כתבי כאן את השורה שלך..."></textarea>
-          </div>
-
-          <p class="signature">הלוואי שהמכתב הזה יעזור לך לשמוע גם את המילים שלא תמיד נאמרות.<br><strong>באהבה, מיכל</strong></p>
-        </article>
-
-        <div class="cta">
-          <p><strong>זה היה רק המכתב הראשון.</strong></p>
-          <p>יש עוד הרבה "מכתבים"<br>שמסתתרים מאחורי ההתנהגויות של הילד שלך.</p>
-          <p>אם תרצי,<br>אשמח לעזור לך ללמוד לקרוא גם אותם.</p>
-          <a id="ctaBtn" class="primary-btn cta-btn" href="https://michal-vilman.ravpage.co.il/ragish3" target="_blank" rel="noopener">אני רוצה להבין את הילד שלי לעומק</a>
+      <section class="choices-panel">
+        <div id="prompt" class="prompt"></div>
+        <div id="choices" class="choices"></div>
+        <div class="actions">
+          <button id="undoBtn" class="ghost-btn" type="button" hidden>מחיקה ובחירה מחדש</button>
+          <button id="nextBtn" class="primary-btn" type="button" hidden>להמשך המכתב</button>
         </div>
+      </section>
+
+      <section class="scene-panel">
+        <img id="sceneImage" class="scene-image" alt="">
+        <div class="scene-text">
+          <p id="sceneDesc"></p>
+          <blockquote id="sceneQuote"></blockquote>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <section id="finalScreen" class="screen final-screen">
+    <div class="final-wrap">
+      <article id="finalLetter" class="paper final-letter">
+        <img src="assets/images/logo.png" class="final-letter-logo" alt="חלום של אמא">
+        <h2>המכתב שלא הצלחתי לכתוב לך</h2>
+        <p><strong>אמא היקרה שלי,</strong></p>
+        <p>יש הרבה דברים שניסיתי להגיד לך...</p>
+        <p>אבל לא תמיד היו לי המילים הנכונות.</p>
+        <p>לפעמים מה שיצא ממני היו דווקא צעקות, שתיקות, כעס, או מילים שפגעו.</p>
+        <p id="heartIntro">אם רק הייתי מצליח להסביר לך מה באמת היה לי בלב...</p>
+        <div id="finalParagraphs" class="final-paragraphs"></div>
+        <p class="letter-ending"><strong>אמא...</strong><br>
+        תודה שניסית לקרוא<br>גם את מה שלא הצלחתי להגיד.<br><br>
+        <strong id="endingGender">אוהב,<br>אני</strong></p>
+
+        <div class="mother-line">
+          <label id="motherLabel" for="motherInput"></label>
+          <textarea id="motherInput" rows="3" placeholder="כתבי כאן את השורה שלך..."></textarea>
+        </div>
+        <p class="signature">הלוואי שהמכתב הזה יעזור לך לשמוע גם את המילים שלא תמיד נאמרות.<br><strong>באהבה, מיכל</strong></p>
+      </article>
+
+      <div class="final-actions">
+        <p class="save-note"><strong>המכתב הזה נכתב מתוך ההתבוננות שלך בילד.</strong><br>
+        מציעה לשמור אותו ולחזור לקרוא בו מדי פעם.<br>
+        הוא נוגע ללב ומחבר בין לבבות. 💗</p>
+        <button id="pdfBtn" class="primary-btn" type="button">להורדת המכתב המעוצב כ־PDF</button>
+        <button class="secondary-btn" data-open-purpose type="button">מה המטרה של הכלי?</button>
       </div>
-    </section>
-  </main>
 
-  <script>window.START_GAME_DIRECTLY=true;</script>
-  <script src="script.js"></script>
+      <div class="cta">
+        <p><strong>זה היה רק המכתב הראשון.</strong></p>
+        <p id="ctaGenderText">יש עוד הרבה "מכתבים"<br>שמסתתרים מאחורי ההתנהגויות של הילד שלך.</p>
+        <p>אם תרצי,<br>אשמח לעזור לך ללמוד לקרוא גם אותם.</p>
+        <a class="primary-btn" href="https://michal-vilman.ravpage.co.il/ragish3" target="_blank" rel="noopener">אני רוצה להבין את הילד שלי לעומק</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="modal" id="tutorialModal" aria-hidden="true">
+ <div class="modal-card tutorial-card">
+  <button class="modal-close" type="button" aria-label="סגירה">×</button>
+  <div class="modal-scroll">
+<h2>יופי, אז את מוכנה? בחרת כבר? מקסים!</h2>
+<p>מוזמנת לשחק😊הנה כמה הסברים קלילים:</p>
+<p>בכל שלב, תעלה תמונה חדשה (בצד ימין של המסך), המתארת סיוטואציה כלשהי</p>
+<p>את מתבקשת לבחור את המשפט שזיהית שמתאים לסיטואציה, בה הילד שלך התנהל.</p>
+<p>וכעת, כשאת בוחרת משפט, הוא נכתב 'און ליין' במכתב שנמצא בצד השמאלי של המסך.</p>
+<p>לאחר שתסיימי לבחור את כל הסיטואציות והמשפטים שמותאמים לילד שלך (בהקשר להן),</p>
+<p>תקבלי מכתב שלם וערוך עם כל מה שהוא רצה לאמר ולא כ"כ הצליח.</p>
+<p>מציעה לשמור את המכתב המדהים הזה ולקרוא ב מדי פעם, הוא נוגע ללב ומחבר בין לבבות.</p>
+</div>
+  <button id="tutorialDone" class="primary-btn" type="button">הבנתי, בואי נכתוב</button>
+ </div>
+</div>
+
+<div class="modal" id="purposeModal" aria-hidden="true">
+ <div class="modal-card purpose-card">
+  <button class="modal-close" type="button" aria-label="סגירה">×</button>
+  <div class="modal-scroll">
+<h2>מה המטרה של הכלי?</h2>
+<p><strong>למה צריך את זה ועל איזה קושי או בעיה זה יושב?</strong></p>
+<p><strong>מה הקושי?</strong><br>
+שהילד מתנהג / מדבר / מגיב באופן לא ראוי ולא תואם גיל וסיטואציה, ו/או מתקשה בקשיים שונים<br>
+ואני האמא, לא מספיק מבינה אותו:<br>
+מה הסיפור שלו? למה הוא ככה? למה הוא לא מסביר לי כמו בן אדם מה הבעיה?<br>
+למה הוא לא יכול לבטא את מה שהוא רוצה? וכו'.</p>
+<p>וראשית, יש כאן תובנה חשובה מאד, והיא:<br>
+שילדים רבים (והרבה פעמים גם מבוגרים), לא מצליחים לבטא את מה שמתחולל בתוכם<br>
+מסיבות שונות, כמו:<br>
+הצפה. בושה. חרדה. ולפעמים מרוב רגישות יתר שמוקצנת ומחמירה וכאילו כלי הדיבור ממש נחסמים!</p>
+<p>ולכן:</p>
+<p>א) מאד חשוב להיות מודעים לזה, שזה לא בכוונה. שזה דבר שעלול לקרות ובמיוחד אצל ילדים רגישים, זה עלול לקרות יותר, כי התחושות שלהם נחוות חזק יותר ועלולות לחסום את המח ממש<br>
+(אפשר לראות גם בצילומי מח, שינויים שקורים כאשר יש מצב של התרגשות יתר, חרדה וכד', ז"א היכולת השכלית שקיימת בפוטנציאל, נחסמת)</p>
+<p>ב) חוסר יכולת הדיבור וההתבטאות המתאימים, עלולים בעצם להעצים עוד יותר את הקושי ההתנהגותי, הרגשי או החרדתי- ואז זה מזין את הכעס, הדאגה והבהלה של ההורה... וזה לופ שמזין אחד את השני ומעצים את הקושי</p>
+<hr>
+<p>אז לאחר שהבנו את הקושי של הילד ושל ההורה כתוצאה מזה, אנחנו מבינים שיש כאן מצוקה והתעצמות שלה, ולכן, ברגע שנחזק את ההבנה שלנו על מה קורה לילד, למה ואיך הוא מרגיש,<br>
+זה יעזור לנו להירגע יותר. לתת לו אהבה ואמון. לתת לו חמלה במקום כעס וזה ישפיע מאד לטובה על הילד שבמקום שיכעסו עליו עוד ועוד, הוא פתאום מקבל חמלה ואהבה, וזה מאד ישפיע עליו על הרוגע ובסופו של דבר, גם החסימה הרגשית שלו תתמתן עד שהיא תיפתח ותיעלם בעז"ה.</p>
+<hr>
+<p><strong>אז הנה המתנה שתעזור לזה:</strong><br>
+את מקבלת כלי תהליכי שיעזור לך להבין את השפה של הילד שלך, ויתן לך את ההבנה שחסרה</p>
+</div>
+  <button class="primary-btn modal-done" type="button">סגירה</button>
+ </div>
+</div>
+
+<div id="pdfTemplate" class="pdf-template" aria-hidden="true">
+  <div id="pdfContent" class="pdf-content"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="content.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
