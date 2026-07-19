@@ -49,6 +49,31 @@ function feminize(text){
     .replaceAll('פחות מוצלח','פחות מוצלחת')
     .replaceAll('לא מספיק טוב','לא מספיק טובה')
     .replaceAll('גם כשאני לא מצליח','גם כשאני לא מצליחה');
+  out = out
+    .replaceAll('חשוב לך','חשובה לך')
+    .replaceAll('חשוב','חשובה')
+    .replaceAll('מיוחד','מיוחדת')
+    .replaceAll('עמוס','עמוסה')
+    .replaceAll('מותש','מותשת')
+    .replaceAll('רעב','רעבה')
+    .replaceAll('זקוק','זקוקה')
+    .replaceAll('מוצף','מוצפת')
+    .replaceAll('מעז','מעזה')
+    .replaceAll('מסוגל','מסוגלת')
+    .replaceAll('עייף','עייפה')
+    .replaceAll('נבהלתי','נבהלתי')
+    .replaceAll('פגוע','פגועה')
+    .replaceAll('מבוהל','מבוהלת')
+    .replaceAll('מיואש','מיואשת')
+    .replaceAll('מודאג','מודאגת')
+    .replaceAll('לא יוצלח','לא יוצלחת')
+    .replaceAll('מתוסכל','מתוסכלת')
+    .replaceAll('מתוח','מתוחה')
+    .replaceAll('מדוכא','מדוכאת')
+    .replaceAll('שבור','שבורה')
+    .replaceAll('יודע','יודעת')
+    .replaceAll('אוהב אותך','אוהבת אותך')
+    .replaceAll('אוהב,','אוהבת,');
   return out;
 }
 function getItems(){
@@ -128,7 +153,7 @@ function choose(i,btn){
  btn.classList.add('selected');
  draftLines.querySelector('.current')?.classList.remove('current');
  const p=document.createElement('p');p.className='draft-line current';draftLines.appendChild(p);
- typeText(p,choice.short,()=>{nextBtn.hidden=false;undoBtn.hidden=false});
+ typeText(p,`${getItems()[current].prompt} ${choice.short}`,()=>{nextBtn.hidden=false;undoBtn.hidden=false});
 }
 function typeText(el,text,done){
  isTyping=true;let i=0;
@@ -159,13 +184,13 @@ function showFinal(){
  selected.filter(Boolean).forEach(c=>{const p=document.createElement('p');p.textContent=c.long;paragraphs.appendChild(p)});
  if(gender==='girl'){
   $('#heartIntro').textContent='אם רק הייתי מצליחה להסביר לך מה באמת היה לי בלב...';
-  $('#endingGender').innerHTML='אוהבת,<br>אני';
+  $('#endingGender').innerHTML='אוהבת,<br>הילדה שלך';
   $('#motherLabel').innerHTML='אם הילדה שלך הייתה מוסיפה עוד שורה למכתב הזה, מה היית חושבת שהיא הייתה רוצה לכתוב לך?';
   $('#ctaGenderText').innerHTML='יש עוד הרבה "מכתבים"<br>שמסתתרים מאחורי ההתנהגויות של הילדה שלך.';
   document.querySelector('.save-note strong').textContent='המכתב הזה נכתב מתוך ההתבוננות שלך בילדה.';
  }else{
   $('#heartIntro').textContent='אם רק הייתי מצליח להסביר לך מה באמת היה לי בלב...';
-  $('#endingGender').innerHTML='אוהב,<br>אני';
+  $('#endingGender').innerHTML='אוהב,<br>הילד שלך';
   $('#motherLabel').innerHTML='אם הילד שלך היה מוסיף עוד שורה למכתב הזה, מה היית חושבת שהוא היה רוצה לכתוב לך?';
  }
  window.scrollTo({top:0,behavior:'smooth'});
@@ -180,7 +205,9 @@ async function downloadPDF(){
   const intro=gender==='girl'?'אם רק הייתי מצליחה להסביר לך מה באמת היה לי בלב...':'אם רק הייתי מצליח להסביר לך מה באמת היה לי בלב...';
   let blocks=['<strong>אמא היקרה שלי,</strong>','יש הרבה דברים שניסיתי להגיד לך...','אבל לא תמיד היו לי המילים הנכונות.','לפעמים מה שיצא ממני היו דווקא צעקות, שתיקות, כעס, או מילים שפגעו.',intro,...selected.filter(Boolean).map(c=>c.long)];
   const extra=$('#motherInput').value.trim();if(extra)blocks.push('<strong>ויש עוד משהו שאולי רציתי לומר לך...</strong><br>'+escapeHTML(extra));
-  blocks.push('<strong>אמא...</strong><br>תודה שניסית לקרוא<br>גם את מה שלא הצלחתי להגיד.',`<strong>${gender==='girl'?'אוהבת':'אוהב'},<br>אני</strong>`);
+  const childName=(document.querySelector('#childNameInput')?.value||'').trim();
+  const defaultSign=gender==='girl'?'הילדה שלך':'הילד שלך';
+  blocks.push('<strong>אמא...</strong><br>תודה שניסית לקרוא<br>גם את מה שלא הצלחתי להגיד.',`<strong>${gender==='girl'?'אוהבת':'אוהב'},<br>${escapeHTML(childName||defaultSign)}</strong>`);
   let pages=[],page=[],units=0;
   for(const x of blocks){const u=Math.max(2,Math.ceil(x.replace(/<[^>]+>/g,'').length/52)+1);if(units+u>22&&page.length){pages.push(page);page=[];units=0}page.push(x);units+=u}if(page.length)pages.push(page);
   const {jsPDF}=window.jspdf,doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
@@ -213,3 +240,14 @@ document.querySelector('#motherInput')?.addEventListener('input',e=>{
 
 
 
+
+function updateChildSignature(){
+  const input=document.querySelector('#childNameInput');
+  const name=(input?.value||'').trim();
+  if(gender==='girl'){
+    document.querySelector('#endingGender').innerHTML=`אוהבת,<br>${name||'הילדה שלך'}`;
+  }else{
+    document.querySelector('#endingGender').innerHTML=`אוהב,<br>${name||'הילד שלך'}`;
+  }
+}
+document.querySelector('#childNameInput')?.addEventListener('input',updateChildSignature);

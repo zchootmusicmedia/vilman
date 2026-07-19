@@ -354,110 +354,109 @@ html,body,.app,.screen{max-width:100%;overflow-x:hidden!important}
   }
 }
 
+/* Final client revision */
+:root{
+  --paper:#fffdfb;
+  --ink:#3b3b3b;
+  --muted:#66615f;
+  --brand:#e63f8d;
+  --brand-dark:#b72c71;
+  --pink:#ec5aa0;
+  --pink-soft:#fde5f1;
+  --gold:#d3ad32;
+  --cream:#fffaf3;
+  --shadow:0 18px 52px rgba(170,57,114,.14);
+}
 
-/* Round 5: real desktop overflow fix */
-@media (min-width: 951px) {
-  .game-screen {
-    width: 100%;
-    max-width: 100%;
-    padding-left: 28px !important;
-    padding-right: 28px !important;
-    box-sizing: border-box !important;
-    overflow-x: hidden !important;
+body{
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 4% 7%,rgba(236,90,160,.16),transparent 27%),
+    radial-gradient(circle at 95% 8%,rgba(211,173,50,.18),transparent 27%),
+    radial-gradient(circle at 84% 92%,rgba(230,63,141,.08),transparent 30%),
+    linear-gradient(135deg,#fffdf9,#fff6fa 52%,#fff8ef);
+}
+
+h1,h2,h3,h4,.prompt,.scene-text blockquote{color:var(--brand-dark)}
+.primary-btn{background:linear-gradient(135deg,var(--pink),var(--brand))}
+.progress-fill{background:linear-gradient(90deg,var(--gold),var(--pink),var(--brand))}
+.draft-line.current,.dear,.signature{color:var(--brand)}
+.final-letter{color:#393939}
+.final-letter h2{color:var(--brand)}
+.final-letter strong{color:var(--brand-dark)}
+.pdf-content{color:#3b3b3b}
+.pdf-content h1{color:var(--brand)}
+
+.purpose-card{width:min(900px,96vw)}
+.purpose-card h2{font-size:30px;margin-bottom:12px}
+.purpose-card h3{color:var(--brand);margin-top:28px}
+.purpose-point{
+  background:linear-gradient(135deg,#fff,#fff7fb);
+  border-right:5px solid var(--pink);
+  border-radius:18px;
+  padding:16px 20px;
+  margin:14px 0;
+  box-shadow:0 8px 24px rgba(230,63,141,.08);
+}
+.purpose-point h4{margin:0 0 6px;font-size:21px}
+.purpose-point p{margin:0}
+.purpose-card hr{border:0;border-top:2px solid rgba(211,173,50,.45);margin:26px 0}
+
+.child-name-field{
+  font-family:"Heebo",Arial,sans-serif;
+  margin-top:20px;
+  padding-top:18px;
+  border-top:1px solid #eadde2;
+}
+.child-name-field label{display:block;font-weight:700;margin-bottom:8px;color:var(--brand-dark)}
+.child-name-field input{
+  width:100%;padding:12px 14px;border:1px solid #dcc8d1;border-radius:14px;
+  font:inherit;background:#fff;
+}
+
+/* True centered safe-area layout */
+.game-screen{
+  width:100%;
+  max-width:100%;
+  padding-inline:clamp(24px,4vw,64px)!important;
+  box-sizing:border-box;
+}
+.game-board{
+  width:min(1500px,100%)!important;
+  max-width:100%!important;
+  margin-inline:auto!important;
+  grid-template-columns:minmax(0,34fr) minmax(0,31fr) minmax(0,35fr)!important;
+  gap:clamp(16px,2vw,28px)!important;
+  box-sizing:border-box;
+}
+.topbar{
+  width:min(1500px,100%)!important;
+  margin-inline:auto!important;
+}
+.letter-panel,.choices-panel,.scene-panel,
+.scene-image,.scene-text,.prompt,.choices,.choice-btn{
+  min-width:0!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+}
+
+@media(max-width:950px){
+  .game-screen{
+    padding-inline:18px!important;
+    width:100%!important;
   }
-
-  .game-board {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-    grid-template-columns:
-      minmax(0, 34fr)
-      minmax(0, 31fr)
-      minmax(0, 35fr) !important;
-    gap: 22px !important;
-    box-sizing: border-box !important;
+  .game-board,.topbar{
+    width:100%!important;
+    max-width:100%!important;
+    margin-inline:auto!important;
   }
-
-  .letter-panel,
-  .choices-panel,
-  .scene-panel {
-    min-width: 0 !important;
-    max-width: 100% !important;
-    overflow-x: hidden !important;
-  }
-
-  .scene-image,
-  .scene-text,
-  .prompt,
-  .choices,
-  .choice-btn {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-    box-sizing: border-box !important;
-  }
-
-  .scene-text {
-    padding-left: 12px !important;
-    padding-right: 12px !important;
+  .scene-panel,.choices-panel,.letter-panel{
+    width:100%!important;
+    max-width:100%!important;
+    padding-inline:0!important;
   }
 }
 
-/* Registration page must always scroll and the embedded form must remain visible */
-.registration-page {
-  height: auto !important;
-  min-height: 100vh !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-}
-
-.registration-shell {
-  height: auto !important;
-  min-height: 100vh !important;
-  max-height: none !important;
-  overflow: visible !important;
-}
-
-.signup-box {
-  display: block !important;
-  position: relative !important;
-  width: min(650px, 100%) !important;
-  min-height: 820px !important;
-  height: auto !important;
-  max-height: none !important;
-  margin: 28px auto 80px !important;
-  overflow: visible !important;
-  z-index: 0 !important;
-}
-
-.signup-box iframe {
-  display: block !important;
-  width: 100% !important;
-  min-height: 760px !important;
-  height: 760px !important;
-  max-width: 100% !important;
-  border: 0 !important;
-  position: relative !important;
-}
-
-.signup-box form,
-.signup-box > div {
-  width: 100% !important;
-  max-width: 100% !important;
-}
-
-.form-loading-note {
-  display: none;
-  margin: 18px auto;
-  padding: 16px 20px;
-  max-width: 560px;
-  border-radius: 18px;
-  background: #fff8f2;
-  color: #7f2730;
-  font-weight: 700;
-  line-height: 1.5;
-}
-
-.form-loading-note.show {
-  display: block;
-}
+.pdf-content{font-size:31px!important;line-height:1.42!important;padding-top:235px!important;padding-bottom:250px!important}
+.pdf-content p{margin:12px 0!important}
+.pdf-content h1{margin:0 0 18px!important}
