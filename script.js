@@ -1,6 +1,6 @@
 
 const BASE = window.VILMAN_SITUATIONS;
-let gender = localStorage.getItem('vilmanGender');
+let gender = null;
 let current = 0;
 let selected = [];
 let isTyping = false;
@@ -107,11 +107,11 @@ document.querySelectorAll('[data-game-gender]').forEach(btn=>{
 });
 
 function init(){
- if(!gender){
+  gender = null;
+  localStorage.removeItem('vilmanGender');
   genderScreen.classList.add('active');
- }else{
-  startGame(true);
- }
+  gameScreen.classList.remove('active');
+  finalScreen.classList.remove('active');
 }
 function startGame(showTutorial=false){
  current=0;
