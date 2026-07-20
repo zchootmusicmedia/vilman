@@ -6,180 +6,165 @@
 <title>המכתב שלא הצלחתי לכתוב לך</title>
 <link rel="stylesheet" href="style.css">
 </head>
-<body class="registration-page">
-<main class="registration-shell">
-  <img src="assets/images/logo.png" class="logo intro-logo" alt="חלום של אמא">
-  <div class="kicker">חוויה אינטראקטיבית לאימהות לילדים רגישים</div>
-  <h1>המכתב שלא הצלחתי לכתוב לך</h1>
-  <section class="opening-copy">
-<p>אמא יקרה,</p>
-<p>בואי והתנתקי לכמה ד' מכל מה 'בחוץ', והתמקדי בילד/ה שלך.</p>
-<p>במשחק השאלון האינטראקטיבי שמוצג כאן לפניך, יעלו תמונות סיטואציה שונות<br>
-שיציגו מגוון התנהגויות ואינטראקציות.</p>
-<p>בואי, קחי אליך את השרביט:)</p>
-<p>ונסי לזהות מה קורה לילד /ה שלך ומהן האמירות שהתחבאו אצלו בלב?</p>
-<p>נסי לדייק את האמירות שאת מזהה יותר ויותר שחבויות בו,</p>
-<p>אלו דקות יקרות שבהן את מייצרת יותר הבנה ויותר חמלה עבורו</p>
-<p>וככל שהוא ירגיש את זה יותר, הוא בעז"ה, ייתחבר אליך וירגיש נינוח. רגוע ויציב יותר.</p>
-<p><strong>אז אפשר להתחיל??</strong></p>
-
-</section>
-
-  <button class="secondary-btn" data-open-purpose type="button">מה מטרת משחק השאלון האינטראקטיבי?</button>
-
-  <section class="gender-choice registration-gender">
-    <h2>ממי המכתב שאת הולכת לקבל?</h2>
-    <div class="gender-buttons">
-      <button type="button" data-gender="boy">👦 מהילד שלי</button>
-      <button type="button" data-gender="girl">👧 מהילדה שלי</button>
+<body>
+<main id="app" class="app">
+  <section id="genderScreen" class="screen gender-screen">
+    <div class="gender-card">
+      <img src="assets/images/logo.png" class="logo" alt="חלום של אמא">
+      <h1>המכתב שלא הצלחתי לכתוב לך</h1>
+      <h2>ממי המכתב שאת הולכת לקבל?</h2>
+      <div class="gender-buttons">
+        <button type="button" data-game-gender="boy">👦 מהילד שלי</button>
+        <button type="button" data-game-gender="girl">👧 מהילדה שלי</button>
+      </div>
+      <button class="secondary-btn" data-open-purpose type="button">מה מטרת משחק השאלון האינטראקטיבי?</button>
     </div>
-    <p id="genderHint" class="gender-hint">בחרי אפשרות, והיא תישמר גם לאחר ההרשמה.</p>
   </section>
 
-  <div class="signup-box">
-    <script type='text/javascript' src='//form2.ravpage.co.il/746b0a96beed9ad00231644b80fcc6f86A569EE8' charset='UTF-8'></script>
-  </div>
+  <section id="gameScreen" class="screen game-screen">
+    <header class="topbar">
+      <img src="assets/images/logo.png" class="logo small" alt="חלום של אמא">
+      <div class="progress">
+        <span id="stepCounter">1 / 8</span>
+        <div class="progress-track"><div id="progressFill" class="progress-fill"></div></div>
+      </div>
+      <button class="tiny-help" id="tutorialAgain" type="button" aria-label="הסבר">?</button>
+    </header>
+
+    <div class="game-board">
+      <aside class="letter-panel">
+        <div class="paper draft-paper" id="draftPaper">
+          <div class="dear">אמא יקרה,</div>
+          <div id="draftLines" class="draft-lines"></div>
+        </div>
+      </aside>
+
+      <section class="choices-panel">
+        <div id="prompt" class="prompt"></div>
+        <div id="choices" class="choices"></div>
+        <div class="actions">
+          <button id="undoBtn" class="ghost-btn" type="button" hidden>מחיקה ובחירה מחדש</button>
+          <button id="nextBtn" class="primary-btn" type="button" hidden>להמשך המכתב</button>
+        </div>
+      </section>
+
+      <section class="scene-panel">
+        <img id="sceneImage" class="scene-image" alt="">
+        <div class="scene-text">
+          <p id="sceneDesc"></p>
+          <blockquote id="sceneQuote"></blockquote>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <section id="finalScreen" class="screen final-screen">
+    <div class="final-wrap">
+      <article id="finalLetter" class="paper final-letter">
+        <img src="assets/images/logo.png" class="final-letter-logo" alt="חלום של אמא">
+        <h2>המכתב שלא הצלחתי לכתוב לך</h2>
+        <p><strong>אמא היקרה שלי,</strong></p>
+        <p>יש הרבה דברים שניסיתי להגיד לך...</p>
+        <p>אבל לא תמיד היו לי המילים הנכונות.</p>
+        <p>לפעמים מה שיצא ממני היו דווקא צעקות, שתיקות, כעס, או מילים שפגעו.</p>
+        <p id="heartIntro">אם רק הייתי מצליח להסביר לך מה באמת היה לי בלב...</p>
+        <div id="finalParagraphs" class="final-paragraphs"></div><button id="skipFinalTyping" class="ghost-btn skip-writing" type="button" hidden>להצגת המכתב המלא</button><div id="customLetterLine"></div>
+        <div class="child-name-field">
+          <label for="childNameInput">שם הילד/ה שיופיע בחתימת המכתב (לא חובה)</label>
+          <input id="childNameInput" type="text" maxlength="40" placeholder="לדוגמה: יוסי">
+        </div>
+        <p class="letter-ending"><strong>אמא...</strong><br>
+        תודה שניסית לקרוא<br>גם את מה שלא הצלחתי להגיד.<br><br>
+        <strong id="endingGender">אוהב,<br>הילד שלך</strong></p>
+
+        <div class="mother-line">
+          <label id="motherLabel" for="motherInput"></label>
+          <textarea id="motherInput" rows="3" placeholder="כתבי כאן את השורה שלך..."></textarea>
+        </div>
+        <p class="signature">הלוואי שהמכתב הזה יעזור לך לשמוע גם את המילים שלא תמיד נאמרות.<br><strong>באהבה, מיכל</strong></p>
+      </article>
+
+      <div class="final-actions">
+        <p class="save-note">מציעה לשמור את המכתב המדהים הזה ולקרוא בו מדי פעם, הוא נוגע ללב ומחבר בין לבבות.</p>
+        <button id="pdfBtn" class="primary-btn" type="button">להורדת המכתב המעוצב כ־PDF</button>
+        <button class="secondary-btn" data-open-purpose type="button">מה בעצם קרה כאן בתהליך?</button>
+      </div>
+
+      <div class="cta">
+        <p>מאחורי התנהגויות רבות של הילד/ה מסתתרים רגשות, צרכים ומילים שלא תמיד מצליחים לצאת החוצה.</p><p>מוזמנת להעמיק ולהבין מה הילד/ה שלך אולי מתקשה לבטא.</p>
+        <a class="primary-btn" href="https://michal-vilman.ravpage.co.il/ragish3" target="_blank" rel="noopener">אני רוצה להבין את הילד שלי לעומק</a>
+      </div>
+    </div>
+  </section>
 </main>
 
+
+<div class="modal" id="tutorialModal" aria-hidden="true">
+  <div class="modal-card tutorial-card">
+    <button class="modal-close" type="button" aria-label="סגירה">×</button>
+    <div class="modal-scroll">
+      <h2>כך כותבים את המכתב</h2>
+      <p>בכל שלב תופיע תמונה חדשה.</p>
+      <p>בחרי את המשפט שהכי מתאים למה שאולי התחבא בלב של הילד או הילדה שלך.</p>
+      <p>כל בחירה תתווסף למכתב שנכתב בצד.</p>
+    </div>
+    <button id="tutorialDone" class="primary-btn" type="button">הבנתי, בואי נכתוב</button>
+  </div>
+</div>
+
+
 <div class="modal" id="purposeModal" aria-hidden="true">
- <div class="modal-card purpose-card">
-  <button class="modal-close" type="button" aria-label="סגירה">×</button>
-  <div class="modal-scroll">
-<h2>מהי המטרה של משחק השאלון האינטראקטיבי?</h2>
+  <div class="modal-card purpose-card">
+    <button class="modal-close" type="button" aria-label="סגירה">×</button>
+    <div class="modal-scroll">
+      <h2>מהי המטרה של משחק השאלון האינטראקטיבי?</h2>
 
-<p>כהורים, כולנו מכירים רגעים שבהם הילד מגיב בצורה שנראית לנו לא מותאמת: הוא מתפרץ, נסגר, מסרב לשתף פעולה או מגיב בעוצמה שנראית גדולה ביחס למה שקרה.</p>
+      <p>כהורים, כולנו מכירים רגעים שבהם הילד מגיב בצורה שנראית לנו לא מותאמת: הוא מתפרץ, נסגר, מסרב לשתף פעולה או מגיב בעוצמה שנראית גדולה ביחס למה שקרה.</p>
 
-<p>ברגעים כאלה, קל מאוד להתמקד בהתנהגות עצמה. אך פעמים רבות, ההתנהגות היא רק הסימן החיצוני למה שמתחולל בתוך עולמו הפנימי של הילד.</p>
+      <p>ברגעים כאלה, קל מאוד להתמקד בהתנהגות עצמה. אך פעמים רבות, ההתנהגות היא רק הסימן החיצוני למה שמתחולל בתוך עולמו הפנימי של הילד.</p>
 
-<p>פיענוח ה'מכתב', ע"י משחק השאלון האינטראקטיבי, נועד לעזור לנו לזהות את אותם "טריגרים" שמפעילים את הילד, ולהבין מה עשוי לעמוד מאחורי התגובה שלו.</p>
+      <p>פיענוח ה'מכתב', ע"י משחק השאלון האינטראקטיבי, נועד לעזור לנו לזהות את אותם "טריגרים" שמפעילים את הילד, ולהבין מה עשוי לעמוד מאחורי התגובה שלו.</p>
 
-<p>לאחר מילוי השאלון תקבלו "מכתב" מנקודת מבטו של הילד. המכתב אינו מתיימר לדעת בדיוק מה הילד חושב או מרגיש, אלא מציע דרך להסתכל על החוויה שלו מתוך אמפתיה והבנה.</p>
+      <p>לאחר מילוי השאלון תקבלו "מכתב" מנקודת מבטו של הילד. המכתב אינו מתיימר לדעת בדיוק מה הילד חושב או מרגיש, אלא מציע דרך להסתכל על החוויה שלו מתוך אמפתיה והבנה.</p>
 
-<p>לעיתים ילדים אינם מצליחים לבטא במילים את מה שעובר עליהם. הם עשויים לחוות הצפה רגשית, רגישות גבוהה, פחד, בושה או קושי לארגן את המחשבות והרגשות שלהם. במצבים כאלה, ההתנהגות הופכת לשפה שדרכה הם מבטאים את המצוקה.</p>
+      <p>לעיתים ילדים אינם מצליחים לבטא במילים את מה שעובר עליהם. הם עשויים לחוות הצפה רגשית, רגישות גבוהה, פחד, בושה או קושי לארגן את המחשבות והרגשות שלהם. במצבים כאלה, ההתנהגות הופכת לשפה שדרכה הם מבטאים את המצוקה.</p>
 
-<h3>המטרה של המכתב היא לעזור לנו:</h3>
+      <h3>המטרה של המכתב היא לעזור לנו:</h3>
 
-<div class="purpose-point">
-  <h4>להבין את המשמעות שמאחורי ההתנהגות</h4>
-  <p>במקום לשאול רק "למה הוא מתנהג כך?", נוכל גם לשאול: "מה הוא מנסה לומר לי דרך ההתנהגות שלו?"</p>
+      <div class="purpose-point">
+        <h4>להבין את המשמעות שמאחורי ההתנהגות</h4>
+        <p>במקום לשאול רק "למה הוא מתנהג כך?", נוכל גם לשאול: "מה הוא מנסה לומר לי דרך ההתנהגות שלו?"</p>
+      </div>
+
+      <div class="purpose-point">
+        <h4>לראות את הילד מעבר לקושי</h4>
+        <p>כאשר אנחנו מבינים שהתגובה שלו נובעת ממצוקה ולא בהכרח מבחירה מודעת, קל יותר להגיב מתוך הכלה, מבלי לוותר על גבולות ברורים ועקביים.</p>
+      </div>
+
+      <div class="purpose-point">
+        <h4>לעצור את מעגל ההסלמה</h4>
+        <p>כאשר הילד מתקשה לבטא את עצמו, ההתנהגות עלולה להחריף. גם אנחנו, מתוך דאגה או תסכול, עלולים להגיב בעוצמה רבה יותר. כך נוצר מעגל שבו שני הצדדים מגיבים מתוך קושי. ההבנה מאפשרת לעצור את המעגל הזה ולהוביל אותו לכיוון רגוע ומיטיב יותר.</p>
+      </div>
+
+      <hr>
+
+      <p>כאשר ההורה מצליח להבין טוב יותר את עולמו של הילד, הוא יכול להגיב ממקום יציב, רגוע ובטוח יותר ותגובה כזו מחזקת את תחושת הביטחון של הילד, מעמיקה את הקשר ביניהם ומאפשרת לו בהדרגה לפתח דרכי התמודדות טובות יותר.</p>
+
+      <p>בסופו של דבר, מטרת השאלון אינה רק להבין טוב יותר את הילד, אלא גם לחזק את תחושת המסוגלות של ההורה. כאשר אנחנו מבינים מה עשוי לעמוד מאחורי ההתנהגות, קל יותר לבחור תגובה שמרגיעה את המצב, מחזקת את הקשר ומקדמת את הילד בדרך שתיטיב איתו ועם כל בני הבית.</p>
+
+      <p>המכתב אינו בא להחליף את ההיכרות שלכם עם ילדכם. הוא מציע נקודת מבט נוספת, שעשויה לעזור לנו לראות את מה שלפעמים מסתתר מאחורי ההתנהגות הגלויה, ומתוך כך להגיב מתוך יותר הבנה, ביטחון ושיקול דעת.</p>
+    </div>
+    <button class="primary-btn modal-done" type="button">סגירה</button>
+  </div>
 </div>
 
-<div class="purpose-point">
-  <h4>לראות את הילד מעבר לקושי</h4>
-  <p>כאשר אנחנו מבינים שהתגובה שלו נובעת ממצוקה ולא בהכרח מבחירה מודעת, קל יותר להגיב מתוך הכלה, מבלי לוותר על גבולות ברורים ועקביים.</p>
+<div id="pdfTemplate" class="pdf-template" aria-hidden="true">
+  <div id="pdfContent" class="pdf-content"></div>
 </div>
 
-<div class="purpose-point">
-  <h4>לעצור את מעגל ההסלמה</h4>
-  <p>כאשר הילד מתקשה לבטא את עצמו, ההתנהגות עלולה להחריף. גם אנחנו, מתוך דאגה או תסכול, עלולים להגיב בעוצמה רבה יותר. כך נוצר מעגל שבו שני הצדדים מגיבים מתוך קושי. ההבנה מאפשרת לעצור את המעגל הזה ולהוביל אותו לכיוון רגוע ומיטיב יותר.</p>
-</div>
-
-<hr>
-
-<p>כאשר ההורה מצליח להבין טוב יותר את עולמו של הילד, הוא יכול להגיב ממקום יציב, רגוע ובטוח יותר ותגובה כזו מחזקת את תחושת הביטחון של הילד, מעמיקה את הקשר ביניהם ומאפשרת לו בהדרגה לפתח דרכי התמודדות טובות יותר.</p>
-
-<p>בסופו של דבר, מטרת השאלון אינה רק להבין טוב יותר את הילד, אלא גם לחזק את תחושת המסוגלות של ההורה. כאשר אנחנו מבינים מה עשוי לעמוד מאחורי ההתנהגות, קל יותר לבחור תגובה שמרגיעה את המצב, מחזקת את הקשר ומקדמת את הילד בדרך שתיטיב איתו ועם כל בני הבית.</p>
-
-<p>המכתב אינו בא להחליף את ההיכרות שלכם עם ילדכם. הוא מציע נקודת מבט נוספת, שעשויה לעזור לנו לראות את מה שלפעמים מסתתר מאחורי ההתנהגות הגלויה, ומתוך כך להגיב מתוך יותר הבנה, ביטחון ושיקול דעת.</p>
-</div>
-  <button class="primary-btn modal-done" type="button">הבנתי, אני רוצה להתחיל לכתוב את המכתב</button>
- </div>
-</div>
-<script>
-document.querySelectorAll('[data-gender]').forEach(btn => {
- btn.addEventListener('click', () => {
-  localStorage.setItem('vilmanGender', btn.dataset.gender);
-  document.querySelectorAll('[data-gender]').forEach(b => b.classList.toggle('selected', b===btn));
-  document.getElementById('genderHint').textContent = btn.dataset.gender==='girl' ? 'נבחרה גרסת הילדה.' : 'נבחרה גרסת הילד.';
- });
-});
-const savedGender=localStorage.getItem('vilmanGender');
-if(savedGender) document.querySelector(`[data-gender="${savedGender}"]`)?.classList.add('selected');
-const modal=document.getElementById('purposeModal');
-document.querySelector('[data-open-purpose]').onclick=()=>{modal.classList.add('open');modal.setAttribute('aria-hidden','false')};
-modal.querySelectorAll('.modal-close,.modal-done').forEach(b=>b.onclick=()=>{modal.classList.remove('open');modal.setAttribute('aria-hidden','true')});
-</script>
-
-<script>
-(function () {
-  const formHost = document.querySelector('.signup-box');
-  if (!formHost) return;
-
-  function forceSameTab(root = document) {
-    root.querySelectorAll('form[target="_blank"]').forEach(form => {
-      form.setAttribute('target', '_self');
-    });
-
-    root.querySelectorAll('a[target="_blank"]').forEach(link => {
-      const href = link.getAttribute('href') || '';
-      if (href.includes('game.html') || href.includes('zchootmusicmedia.github.io/vilman')) {
-        link.setAttribute('target', '_self');
-      }
-    });
-
-    root.querySelectorAll('iframe').forEach(frame => {
-      frame.removeAttribute('target');
-    });
-  }
-
-  forceSameTab(formHost);
-
-  const observer = new MutationObserver(() => forceSameTab(formHost));
-  observer.observe(formHost, {
-    childList: true,
-    subtree: true,
-    attributes: true,
-    attributeFilter: ['target', 'href']
-  });
-
-  formHost.addEventListener('submit', function (event) {
-    const form = event.target.closest('form');
-    if (form) form.setAttribute('target', '_self');
-  }, true);
-
-  const originalOpen = window.open;
-  window.open = function (url, target, features) {
-    if (
-      typeof url === 'string' &&
-      (url.includes('game.html') || url.includes('zchootmusicmedia.github.io/vilman'))
-    ) {
-      window.location.assign(url);
-      return window;
-    }
-    return originalOpen.call(window, url, target, features);
-  };
-})();
-</script>
-
-
-<script>
-(function(){
-  const host=document.querySelector('.signup-box');
-  if(!host)return;
-
-  function forceSameTab(){
-    host.querySelectorAll('form').forEach(form=>form.setAttribute('target','_self'));
-    host.querySelectorAll('a[target="_blank"]').forEach(a=>a.setAttribute('target','_self'));
-  }
-
-  forceSameTab();
-  new MutationObserver(forceSameTab).observe(host,{childList:true,subtree:true,attributes:true});
-
-  host.addEventListener('submit',e=>{
-    const form=e.target.closest('form');
-    if(form)form.setAttribute('target','_self');
-  },true);
-
-  const originalOpen=window.open;
-  window.open=function(url,target,features){
-    if(typeof url==='string' && (url.includes('game.html') || url.includes('zchootmusicmedia.github.io/vilman'))){
-      window.location.assign(url);
-      return window;
-    }
-    return originalOpen.call(window,url,target,features);
-  };
-})();
-</script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="content.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
