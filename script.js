@@ -77,17 +77,15 @@ function feminize(text){
   return out;
 }
 function getItems(){
- return BASE.map(item=>{
-   const copy=JSON.parse(JSON.stringify(item));
-   copy.image=`assets/images/${gender}/${item.key}.webp`;
-   if(gender==='girl'){
-     copy.desc=feminize(copy.desc);
-     copy.quote=feminize(copy.quote);
-     copy.prompt=feminize(copy.prompt);
-     copy.choices=copy.choices.map(c=>({short:feminize(c.short),long:feminize(c.long)}));
-   }
-   return copy;
- });
+  const source = gender === 'girl'
+    ? window.VILMAN_SITUATIONS_GIRL
+    : window.VILMAN_SITUATIONS;
+
+  return source.map(item => {
+    const copy = JSON.parse(JSON.stringify(item));
+    copy.image = `assets/images/${gender}/${item.key}.webp`;
+    return copy;
+  });
 }
 function openModal(id){
  const m=document.getElementById(id);m.classList.add('open');m.setAttribute('aria-hidden','false');
