@@ -160,7 +160,7 @@ function typeText(el,text,done){
   draftPaper.scrollTo({top:draftPaper.scrollHeight,behavior:'smooth'});
   if(i<text.length){
     const ratio=i/text.length;
-    setTimeout(tick,ratio>.78?95:ratio>.55?70:45);
+    setTimeout(tick,ratio>.78?65:ratio>.55?48:30);
   }else{isTyping=false;done&&done()}
  };
  tick();
@@ -217,20 +217,100 @@ function escapeHTML(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','
 init();
 
 let finalTypingCancelled=false;
-async function animateFinalLetter(){
- finalTypingCancelled=false;
- const ps=[...document.querySelectorAll('#finalParagraphs p')];
- ps.forEach(p=>{p.dataset.full=p.textContent;p.textContent=''});
- const skip=document.querySelector('#skipFinalTyping'); if(skip)skip.hidden=false;
- for(const p of ps){
-  const t=p.dataset.full||'';
-  for(let i=0;i<t.length&&!finalTypingCancelled;i++){p.textContent+=t[i];if(i%4===0)await new Promise(r=>setTimeout(r,42))}
-  if(finalTypingCancelled)break;
- }
- if(finalTypingCancelled)ps.forEach(p=>p.textContent=p.dataset.full||'');
- if(skip)skip.hidden=true;
+const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+
+function collectFinalLetterParts(){
+  const letter=document.querySelector('#finalLetter');
+  if(!letter)return [];
+
+  const parts=[];
+  [...letter.children].forEach(child=>{
+    if(child.id==='finalParagraphs'){
+      parts.push(...child.querySelectorAll('p'));
+      return;
+    }
+
+    if(
+      child.matches('p') &&
+      !child.classList.contains('signature')
+    ){
+      parts.push(child);
+    }
+  });
+  return parts;
 }
-document.querySelector('#skipFinalTyping')?.addEventListener('click',()=>{finalTypingCancelled=true;document.querySelectorAll('#finalParagraphs p').forEach(p=>p.textContent=p.dataset.full||'')});
+
+async function typeHtmlContent(target, html){
+  const template=document.createElement('template');
+  template.innerHTML=html;
+
+  async function copyNode(source,parent){
+    if(finalTypingCancelled)return;
+
+    if(source.nodeType===Node.TEXT_NODE){
+      const textNode=document.createTextNode('');
+      parent.appendChild(textNode);
+      const text=source.textContent||'';
+
+      for(const char of text){
+        if(finalTypingCancelled)return;
+        textNode.textContent+=char;
+
+        // קצב קריא ומרגש במסך הסופי בלבד.
+        const pause=/[.!?…]/.test(char)?75:/[,;:]/.test(char)?38:14;
+        await wait(pause);
+      }
+      return;
+    }
+
+    if(source.nodeType===Node.ELEMENT_NODE){
+      const clone=source.cloneNode(false);
+      parent.appendChild(clone);
+      for(const child of source.childNodes){
+        await copyNode(child,clone);
+        if(finalTypingCancelled)return;
+      }
+    }
+  }
+
+  target.innerHTML='';
+  for(const node of template.content.childNodes){
+    await copyNode(node,target);
+    if(finalTypingCancelled)return;
+  }
+}
+
+async function animateFinalLetter(){
+  finalTypingCancelled=false;
+
+  const parts=collectFinalLetterParts();
+  const originals=parts.map(el=>({el,html:el.innerHTML}));
+  const skip=document.querySelector('#skipFinalTyping');
+
+  originals.forEach(({el})=>{
+    el.innerHTML='';
+    el.style.visibility='visible';
+  });
+
+  if(skip)skip.hidden=false;
+
+  for(const {el,html} of originals){
+    if(finalTypingCancelled)break;
+    await typeHtmlContent(el,html);
+    if(!finalTypingCancelled)await wait(320);
+  }
+
+  if(finalTypingCancelled){
+    originals.forEach(({el,html})=>{el.innerHTML=html});
+  }
+
+  if(skip)skip.hidden=true;
+}
+
+document.querySelector('#skipFinalTyping')?.addEventListener('click',()=>{
+  finalTypingCancelled=true;
+});
+
 document.querySelector('#motherInput')?.addEventListener('input',e=>{
  const v=e.target.value.trim(),box=document.querySelector('#customLetterLine');
  box.innerHTML=v?`<p><strong>ויש עוד משהו שאולי רציתי לומר לך...</strong><br>${escapeHTML(v)}</p>`:'';
