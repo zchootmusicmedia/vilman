@@ -184,8 +184,14 @@ function showFinal(){
   $('#heartIntro').textContent='אם רק הייתי מצליחה להסביר לך מה באמת היה לי בלב...';
   $('#endingGender').innerHTML='אוהבת,<br>הילדה שלך';
   $('#motherLabel').innerHTML='אם הילדה שלך הייתה מוסיפה עוד שורה למכתב הזה, מה היית חושבת שהיא הייתה רוצה לכתוב לך?';
-  $('#ctaGenderText').innerHTML='יש עוד הרבה "מכתבים"<br>שמסתתרים מאחורי ההתנהגויות של הילדה שלך.';
-  document.querySelector('.save-note strong').textContent='המכתב הזה נכתב מתוך ההתבוננות שלך בילדה.';
+  const ctaGenderText=$('#ctaGenderText');
+  if(ctaGenderText){
+    ctaGenderText.innerHTML='יש עוד הרבה "מכתבים"<br>שמסתתרים מאחורי ההתנהגויות של הילדה שלך.';
+  }
+  const saveNoteStrong=document.querySelector('.save-note strong');
+  if(saveNoteStrong){
+    saveNoteStrong.textContent='המכתב הזה נכתב מתוך ההתבוננות שלך בילדה.';
+  }
  }else{
   $('#heartIntro').textContent='אם רק הייתי מצליח להסביר לך מה באמת היה לי בלב...';
   $('#endingGender').innerHTML='אוהב,<br>הילד שלך';
