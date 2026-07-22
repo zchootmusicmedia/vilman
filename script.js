@@ -160,7 +160,7 @@ function typeText(el,text,done){
   draftPaper.scrollTo({top:draftPaper.scrollHeight,behavior:'smooth'});
   if(i<text.length){
     const ratio=i/text.length;
-    setTimeout(tick,ratio>.78?65:ratio>.55?48:30);
+    setTimeout(tick,ratio>.78?95:ratio>.55?70:45);
   }else{isTyping=false;done&&done()}
  };
  tick();
@@ -224,7 +224,7 @@ async function animateFinalLetter(){
  const skip=document.querySelector('#skipFinalTyping'); if(skip)skip.hidden=false;
  for(const p of ps){
   const t=p.dataset.full||'';
-  for(let i=0;i<t.length&&!finalTypingCancelled;i++){p.textContent+=t[i];if(i%4===0)await new Promise(r=>setTimeout(r,22))}
+  for(let i=0;i<t.length&&!finalTypingCancelled;i++){p.textContent+=t[i];if(i%4===0)await new Promise(r=>setTimeout(r,42))}
   if(finalTypingCancelled)break;
  }
  if(finalTypingCancelled)ps.forEach(p=>p.textContent=p.dataset.full||'');
